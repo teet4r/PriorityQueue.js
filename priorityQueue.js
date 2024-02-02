@@ -1,4 +1,4 @@
-class priorityQueue {
+class PriorityQueue {
     #heap = [0];
     #compare = function() {}
 
@@ -75,7 +75,7 @@ class priorityQueue {
 
 }
 
-const pq = new priorityQueue((a, b) => {
+const pq = new PriorityQueue((a, b) => {
     if (a.age == b.age) {
         return a.index < b.index;
     }
