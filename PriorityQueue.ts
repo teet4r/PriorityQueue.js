@@ -35,21 +35,19 @@ export default class PriorityQueue<T> {
         while (index <= (lastIndex >> 1)) {
             const leftChildIndex = index * 2;
             const rightChildIndex = index * 2 + 1;
-            let smallerChild = this.heap[leftChildIndex];
-            let smallerChildIndex = leftChildIndex;
+            let compareChildIndex = leftChildIndex;
 
             if (rightChildIndex <= lastIndex && this.compareFn(this.heap[leftChildIndex], this.heap[rightChildIndex])) {
-                smallerChild = this.heap[rightChildIndex];
-                smallerChildIndex = rightChildIndex;
+                compareChildIndex = rightChildIndex;
             }
 
-            if (!this.compareFn(this.heap[index], this.heap[smallerChildIndex])) {
+            if (!this.compareFn(this.heap[index], this.heap[compareChildIndex])) {
                 break;
             }
             
-            this.swap(index, smallerChildIndex);
+            this.swap(index, compareChildIndex);
 
-            index = smallerChildIndex;
+            index = compareChildIndex;
         }
 
         return top;
@@ -78,12 +76,12 @@ export default class PriorityQueue<T> {
 
 const pq = new PriorityQueue<Object>((a, b) => {
     if (a.age != b.age) {
-        return a.age < b.age;
+        return a.age > b.age;
     }
     if (a.height != b.height) {
-        return a.height < b.height;
+        return a.height > b.height;
     }
-    return a.index < b.index;
+    return a.index > b.index;
 });
 
 for (let i = 0; i < 10; ++i) {
