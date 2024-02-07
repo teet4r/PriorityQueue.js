@@ -1,19 +1,21 @@
 class PriorityQueue {
     #heap = [0];
-    #compare = function() {}
-
-    constructor(compare) {
-        this.#compare = compare;
+    #compareFn;
+    
+    constructor(compareFn) {
+        this.#compareFn = compareFn;
     }
 
     insert(data) {
         this.#heap.push(data);
 
         let index = this.#heap.length - 1;
+        let pIndex = index >> 1;
 
-        while (index > 1 && this.#compare(this.#heap[index], this.#heap[index >> 1])) {
-            this.#swap(index, index >> 1);
+        while (index > 1 && this.#compareFn(this.#heap[pIndex], this.#heap[index])) {
+            this.#swap(index, pIndex);
             index >>= 1;
+            pIndex >>= 1;
         }
     }
 
@@ -36,12 +38,12 @@ class PriorityQueue {
             let smallerChild = this.#heap[leftChildIndex];
             let smallerChildIndex = leftChildIndex;
 
-            if (rightChildIndex <= lastIndex && this.#compare(this.#heap[rightChildIndex], this.#heap[leftChildIndex])) {
+            if (rightChildIndex <= lastIndex && this.#compareFn(this.#heap[leftChildIndex], this.#heap[rightChildIndex])) {
                 smallerChild = this.#heap[rightChildIndex];
                 smallerChildIndex = rightChildIndex;
             }
 
-            if (!this.#compare(this.#heap[smallerChildIndex], this.#heap[index])) {
+            if (!this.#compareFn(this.#heap[index], this.#heap[smallerChildIndex])) {
                 break;
             }
             
