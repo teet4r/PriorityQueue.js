@@ -35,21 +35,19 @@ class PriorityQueue {
         while (index <= (lastIndex >> 1)) {
             const leftChildIndex = index * 2;
             const rightChildIndex = index * 2 + 1;
-            let smallerChild = this.#heap[leftChildIndex];
-            let smallerChildIndex = leftChildIndex;
+            let compareChildIndex = leftChildIndex;
 
             if (rightChildIndex <= lastIndex && this.#compareFn(this.#heap[leftChildIndex], this.#heap[rightChildIndex])) {
-                smallerChild = this.#heap[rightChildIndex];
-                smallerChildIndex = rightChildIndex;
+                compareChildIndex = rightChildIndex;
             }
 
-            if (!this.#compareFn(this.#heap[index], this.#heap[smallerChildIndex])) {
+            if (!this.#compareFn(this.#heap[index], this.#heap[compareChildIndex])) {
                 break;
             }
             
-            this.#swap(index, smallerChildIndex);
+            this.#swap(index, compareChildIndex);
 
-            index = smallerChildIndex;
+            index = compareChildIndex;
         }
 
         return top;
